@@ -1,0 +1,26 @@
+name: Send Email on Push
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Send email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.example.com  # Remplace par ton serveur SMTP
+          server_port: 587
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Nouvelle modification dans le dépôt"
+          body: "Une nouvelle modification a été poussée dans la branche dev."
+          to: "destinataire@example.com"
+          from: "tonemail@example.com"
